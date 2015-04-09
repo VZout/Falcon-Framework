@@ -8,12 +8,9 @@
 
 #include "TempGame.h"
 
-using namespace std;
-
 TempGame* game;
 
 int main() {
-	game = new TempGame();
-	game->create(1024,768,"OpenGL 3 Context");
+	game = new TempGame(1280, 720, "Falcon OpenGL 3.3 Context");
 	return 0;
 }

@@ -13,9 +13,10 @@
 
 class TempGame : public Game {
 public:
-	void init();
+	TempGame(int width, int height, const char* title);
 	void render();
 	void update();
+	~TempGame();
 };
 
 #endif /* TESTINGGAME_TEMPGAME_H_ */

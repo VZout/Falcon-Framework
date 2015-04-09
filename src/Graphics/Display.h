@@ -15,18 +15,21 @@
 
 class Display {
 private:
-	static void initGLFW();
-	static void initGLEW();
+	void initGLFW();
+	void initGLEW();
 public:
-	static void createWindow(int width, int height, const char* title, bool antiAliasing, std::function<void()> initMethod, std::function<void()> renderLoop, std::function<void()> updateLoop);
-	static GLFWwindow* WINDOW;
-	static GLFWmonitor* MONITOR;
-	static const GLFWvidmode* MODE;
-	static int WIDTH;
-	static int HEIGHT;
-	static const char* TITLE;
+	Display(int width, int height, const char* title, std::function<void()> gameLoop);
 
-	Display();
+	GLFWwindow* window;
+	GLFWmonitor* monitor;
+	const GLFWvidmode* mode;
+	int width;
+	int height;
+	const char* title;
+
+	void clear(float r, float g, float b, float a);
+	void update();
+
 	virtual ~Display();
 };
 

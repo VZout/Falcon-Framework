@@ -10,78 +10,59 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <glm/glm.hpp>
-#include <functional>
-#include <fstream>
+#include <string>
+#include <GLFW/glfw3.h>
 
-#include "../Common/ShaderLoader.h"
-
-using namespace glm;
-
-int Display::WIDTH = 0;
-int Display::HEIGHT = 0;
-const char* Display::TITLE = NULL;
-GLFWwindow* Display::WINDOW = NULL;
-GLFWmonitor* Display::MONITOR = NULL;
-const GLFWvidmode* Display::MODE = NULL;
-
-Display::Display() {
-
-}
-
-Display::~Display() {
-	// TODO Auto-generated destructor stub
-}
-
-void Display::createWindow(int width, int height, const char* title, bool antiAliasing, std::function<void()> initMethod, std::function<void()> renderLoop, std::function<void()> updateLoop) {
+Display::Display(int width, int height, const char* title, std::function<void()> gameLoop) {
 	initGLFW();
-	if (antiAliasing) {
-		glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
-	}
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
+
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_RED_BITS, 8);
+	glfwWindowHint(GLFW_GREEN_BITS, 8);
+	glfwWindowHint(GLFW_BLUE_BITS, 8);
+	glfwWindowHint(GLFW_ALPHA_BITS, 8);
+	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	glfwWindowHint(GLFW_DECORATED, GL_TRUE);
 
-	WIDTH = width;
-	HEIGHT = height;
-	TITLE = title;
-	MONITOR = glfwGetPrimaryMonitor();
-	MODE = glfwGetVideoMode(MONITOR);
+	this->width = width;
+	this->height = height;
+	this->title = title;
+	this->monitor= glfwGetPrimaryMonitor();
+	this->mode = glfwGetVideoMode(monitor);
 
-	WINDOW = glfwCreateWindow(WIDTH, HEIGHT, TITLE, NULL, NULL);
-	glfwSetWindowPos(WINDOW, MODE->width / 2 - WIDTH / 2,
-			MODE->height / 2 - HEIGHT / 2);
+	this->window = glfwCreateWindow(width, height, title, NULL, NULL);
+	glfwSetWindowPos(window, mode->width / 2 - this->width / 2, mode->height / 2 - this->height / 2);
 
-	if (WINDOW == NULL) {
-		std::cerr
-				<< "Failed to open GLFW window. Please check if your gpu supports openGL3." << std::endl;
+	if (window == NULL) {
+		std::cerr << "Failed to open GLFW window. Please check if your GPU supports openGL3." << std::endl;
 		glfwTerminate();
 		std::exit(-1);
 	}
 
 	initGLEW();
 
-	// Ensure we can capture the escape key being pressed below
-	glfwSetInputMode(WINDOW, GLFW_STICKY_KEYS, GL_TRUE);
+    while (!glfwWindowShouldClose(window))
+    {
 
-	//Game.cpp's Initialization Method.
-	initMethod();
+    	gameLoop();
 
-	do {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        this->update();
+    }
 
-		//Game.cpp's Render loop.
-		renderLoop();
-		updateLoop();
+    glfwTerminate();
+}
 
-		// Swap buffers
-		glfwSwapBuffers(WINDOW);
-		glfwPollEvents();
+void Display::clear(float r, float g, float b, float a) {
 
-	} // Check if the ESC key was pressed or the window was closed
-	while (glfwGetKey(WINDOW, GLFW_KEY_ESCAPE) != GLFW_PRESS
-			&& glfwWindowShouldClose(WINDOW) == 0);
+}
+
+void Display::update() {
+    glfwSwapBuffers(window);
+    glfwPollEvents();
 }
 
 void Display::initGLFW() {
@@ -92,8 +73,8 @@ void Display::initGLFW() {
 }
 
 void Display::initGLEW() {
-	glfwMakeContextCurrent(WINDOW); // Initialize GLEW
-	glewExperimental = true; // Needed in core profile
+	glfwMakeContextCurrent(window);
+	glewExperimental = true;
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "Failed to initialize GLEW" << std::endl;
 		std::exit(-1);
@@ -106,4 +87,9 @@ void Display::initGLEW() {
 	std::cout << "Shading Language Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) <<  std::endl;
 	std::cout << "#################################" << std::endl;
 	std::cout << std::endl;
+}
+
+Display::~Display() {
+	std::cout << "Oops?" << std::endl;
+	glfwTerminate();
 }
