@@ -9,15 +9,15 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include <string>
-
 class Display;
 
 class Camera;
 
 class Game {
 public:
-	Game(int width, int height, const char* title);
+	Game();
+
+	void start(int width, int height, const char* title);
 
 	static Display* display;
 	static Camera* camera;

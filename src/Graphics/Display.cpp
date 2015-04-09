@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 Display::Display(int width, int height, const char* title, std::function<void()> gameLoop) {
@@ -38,31 +39,24 @@ Display::Display(int width, int height, const char* title, std::function<void()>
 	glfwSetWindowPos(window, mode->width / 2 - this->width / 2, mode->height / 2 - this->height / 2);
 
 	if (window == NULL) {
-		std::cerr << "Failed to open GLFW window. Please check if your GPU supports openGL3." << std::endl;
+		std::cerr << "Failed to open GLFW window. Please check if your GPU supports openGL-3." << std::endl;
 		glfwTerminate();
 		std::exit(-1);
 	}
 
 	initGLEW();
 
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
+        glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    	glClear(GL_COLOR_BUFFER_BIT);
 
     	gameLoop();
 
-        this->update();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 
     glfwTerminate();
-}
-
-void Display::clear(float r, float g, float b, float a) {
-
-}
-
-void Display::update() {
-    glfwSwapBuffers(window);
-    glfwPollEvents();
 }
 
 void Display::initGLFW() {
@@ -90,6 +84,5 @@ void Display::initGLEW() {
 }
 
 Display::~Display() {
-	std::cout << "Oops?" << std::endl;
 	glfwTerminate();
 }

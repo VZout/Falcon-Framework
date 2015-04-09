@@ -15,7 +15,10 @@
 
 Display* Game::display = NULL;
 
-Game::Game(int width, int height, const char* title) {
+Game::Game() {
+}
+
+void Game::start(int width, int height, const char* title) {
 	display = new Display(width, height, title, std::bind(&Game::gameLoop, this));
 }
 

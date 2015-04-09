@@ -27,9 +27,6 @@ public:
 	int height;
 	const char* title;
 
-	void clear(float r, float g, float b, float a);
-	void update();
-
 	virtual ~Display();
 };
 

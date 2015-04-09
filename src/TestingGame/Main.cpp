@@ -11,6 +11,7 @@
 TempGame* game;
 
 int main() {
-	game = new TempGame(1280, 720, "Falcon OpenGL 3.3 Context");
+	game = new TempGame();
+	game->start(1280, 720, "Falcon OpenGL 3.3 Context");
 	return 0;
 }

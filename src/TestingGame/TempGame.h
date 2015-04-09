@@ -13,7 +13,7 @@
 
 class TempGame : public Game {
 public:
-	TempGame(int width, int height, const char* title);
+	TempGame();
 	void render();
 	void update();
 	~TempGame();

@@ -14,15 +14,17 @@
 Rectangle* r;
 Cube* c;*/
 
-TempGame::TempGame(int width, int height, const char* title) : Game(width, height, title) {
+int i = 0;
+
+TempGame::TempGame() {
 }
 
 void TempGame::render() {
-	std::cout << "Stuff" << std::endl;
 }
 
 void TempGame::update() {
-	std::cout << "Stuff" << std::endl;
+	i++;
+	std::cout << "FrameCount = " << i << std::endl;
 }
 
 TempGame::~TempGame() {
