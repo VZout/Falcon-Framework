@@ -9,23 +9,33 @@
 #include "TempGame.h"
 
 #include <iostream>
+#include "../Graphics/Shader.h"
+#include "../Graphics/Mesh.h"
 
-/*Triangle* t;
-Rectangle* r;
-Cube* c;*/
+Vertex vertices[] = {
+		Vertex(glm::vec3(-0.5, -0.5, 0)),
+		Vertex(glm::vec3(0, 0.5, 0)),
+		Vertex(glm::vec3(0.5, -0.5, 0)),
+};
 
-int i = 0;
+Shader* shader;
+Mesh* mesh;
 
 TempGame::TempGame() {
 }
 
+TempGame::~TempGame() {
+}
+
+void TempGame::init() {
+	shader = new Shader("res/basicShader");
+	mesh = new Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
+}
+
 void TempGame::render() {
+	shader->bind();
+	mesh->draw();
 }
 
 void TempGame::update() {
-	i++;
-	std::cout << "FrameCount = " << i << std::endl;
-}
-
-TempGame::~TempGame() {
 }

@@ -14,6 +14,7 @@
 class TempGame : public Game {
 public:
 	TempGame();
+	void init();
 	void render();
 	void update();
 	~TempGame();

@@ -19,6 +19,7 @@ private:
 	void initGLEW();
 public:
 	Display(int width, int height, const char* title, std::function<void()> gameLoop);
+	virtual ~Display();
 
 	GLFWwindow* window;
 	GLFWmonitor* monitor;
@@ -26,8 +27,6 @@ public:
 	int width;
 	int height;
 	const char* title;
-
-	virtual ~Display();
 };
 
 #endif /* DISPLAY_H_ */

@@ -16,24 +16,33 @@
 Display* Game::display = NULL;
 
 Game::Game() {
+	firstFrame = false;
+}
+
+Game::~Game() {
 }
 
 void Game::start(int width, int height, const char* title) {
 	display = new Display(width, height, title, std::bind(&Game::gameLoop, this));
 }
 
-Game::~Game() {
-}
-
 void Game::gameLoop() {
+	if(!firstFrame) {
+		firstFrame = true;
+		init();
+	}
+
 	render();
 	update();
+}
+
+void Game::init() {
+
 }
 
 void Game::render() {
 }
 
 void Game::update() {
-
 }
 

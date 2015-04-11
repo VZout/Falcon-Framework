@@ -17,7 +17,7 @@
 Display::Display(int width, int height, const char* title, std::function<void()> gameLoop) {
 	initGLFW();
 
-	glfwWindowHint(GLFW_SAMPLES, 4);
+/*	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -27,7 +27,7 @@ Display::Display(int width, int height, const char* title, std::function<void()>
 	glfwWindowHint(GLFW_BLUE_BITS, 8);
 	glfwWindowHint(GLFW_ALPHA_BITS, 8);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-	glfwWindowHint(GLFW_DECORATED, GL_TRUE);
+	glfwWindowHint(GLFW_DECORATED, GL_TRUE);*/
 
 	this->width = width;
 	this->height = height;
@@ -59,6 +59,10 @@ Display::Display(int width, int height, const char* title, std::function<void()>
     glfwTerminate();
 }
 
+Display::~Display() {
+	glfwTerminate();
+}
+
 void Display::initGLFW() {
 	if (!glfwInit()) {
 		std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -81,8 +85,4 @@ void Display::initGLEW() {
 	std::cout << "Shading Language Version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) <<  std::endl;
 	std::cout << "#################################" << std::endl;
 	std::cout << std::endl;
-}
-
-Display::~Display() {
-	glfwTerminate();
 }

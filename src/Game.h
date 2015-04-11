@@ -14,8 +14,11 @@ class Display;
 class Camera;
 
 class Game {
+private:
+	bool firstFrame;
 public:
 	Game();
+	virtual ~Game();
 
 	void start(int width, int height, const char* title);
 
@@ -23,10 +26,9 @@ public:
 	static Camera* camera;
 
 	void gameLoop();
+	virtual void init() = 0;
 	virtual void render() = 0;
 	virtual void update() = 0;
-
-	virtual ~Game();
 };
 
 #endif /* GAME_H_ */
