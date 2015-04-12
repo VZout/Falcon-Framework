@@ -17,7 +17,7 @@
 Display::Display(int width, int height, const char* title, std::function<void()> gameLoop) {
 	initGLFW();
 
-/*	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -27,7 +27,7 @@ Display::Display(int width, int height, const char* title, std::function<void()>
 	glfwWindowHint(GLFW_BLUE_BITS, 8);
 	glfwWindowHint(GLFW_ALPHA_BITS, 8);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-	glfwWindowHint(GLFW_DECORATED, GL_TRUE);*/
+	glfwWindowHint(GLFW_DECORATED, GL_TRUE);
 
 	this->width = width;
 	this->height = height;

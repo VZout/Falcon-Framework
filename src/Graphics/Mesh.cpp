@@ -8,35 +8,50 @@
 
 #include "Mesh.h"
 
-Mesh::Mesh(Vertex* vertices, unsigned int numVertices) {
+#include <GL/glu.h>
+#include <cstdlib>
+#include <iostream>
+#include <GL/glew.h>
+
+Mesh::Mesh(GLfloat vertices[], unsigned int numVertices) {
 	drawCount = numVertices;
 
-	glGenVertexArrays(1, &vertexArrayObject);
-	glBindVertexArray(vertexArrayObject);
+	for(unsigned int i = 0; i < sizeof(vertices); i++) {
+		std::cout << "Vertex Data after passed trough constructor: " << vertices[i] << " out of size: " << sizeof(vertices) << std::endl;
+	}
 
-	glGenBuffers(NUM_BUFFERS, vertexArrayBuffers);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[POSITION_VB]);
-	glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(vertices[0]), vertices, GL_STATIC_DRAW);
+	GLenum ErrorCheckValue = glGetError();
 
-	glEnableVertexAttribArray(0); // 0 = layout number
+	glGenVertexArrays(1, &vaoID);
+	glBindVertexArray(vaoID);
+
+	glGenBuffers(NUM_BUFFERS, &vboID);
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(
 			0, //0 = layout number
-			3,
+			4,
 			GL_FLOAT,
 			GL_FALSE,
 			0,
-			(void*)0
+			0
 	);
+	glEnableVertexAttribArray(0); // 0 = layout number
 
 	glBindVertexArray(0); // 0 = layout number
+
+	ErrorCheckValue = glGetError();
+	fprintf(
+	stderr, "ERROR: Could not create a VBO: %s \n",
+			gluErrorString(ErrorCheckValue));
 }
 
 Mesh::~Mesh() {
-	glDeleteVertexArrays(1, &vertexArrayObject);
+	glDeleteVertexArrays(NUM_BUFFERS, &vaoID);
 }
 
 void Mesh::draw() {
-	glBindVertexArray(vertexArrayObject);
+	glBindVertexArray(vaoID);
 
 	glDrawArrays(GL_TRIANGLES, 0, drawCount); // drawCount = amount of vertices
 

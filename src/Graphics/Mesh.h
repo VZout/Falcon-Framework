@@ -14,9 +14,9 @@
 
 class Vertex {
 private:
-	glm::vec3 pos;
+	glm::vec4 pos;
 public:
-	Vertex(const glm::vec3& pos) {
+	Vertex(const glm::vec4& pos) {
 		this->pos = pos;
 	}
 };
@@ -28,11 +28,11 @@ private:
 		POSITION_VB, NUM_BUFFERS
 	};
 
-	GLuint vertexArrayObject;
-	GLuint vertexArrayBuffers[NUM_BUFFERS];
+	GLuint vaoID;
+	GLuint vboID;
 	unsigned int drawCount;
 public:
-	Mesh(Vertex* vertices, unsigned int numVertices);
+	Mesh(GLfloat vertices[], unsigned int numVertices);
 	virtual ~Mesh();
 
 	void draw();

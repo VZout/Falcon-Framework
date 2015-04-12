@@ -1,7 +1,11 @@
-#version 120
+#version 330 core
 
-attribute vec3 position;
+layout(location = 0) in vec4 in_position;
+layout(location = 1) in vec4 in_color;
+
+out vec4 ex_color;
 
 void main() {
-	gl_Position = vec4(position, 1);
+	gl_Position = in_position;
+	ex_color = vec4(1,0,0,1);
 }
