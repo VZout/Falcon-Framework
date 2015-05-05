@@ -30,7 +30,7 @@ namespace FF {
 		glBufferData(GL_ARRAY_BUFFER, numVertices, vertices, GL_STATIC_DRAW);
 		glVertexAttribPointer(
 				0, //0 = layout number
-				4,
+				3,
 				GL_FLOAT,
 				GL_FALSE,
 				0,

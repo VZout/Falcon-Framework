@@ -13,6 +13,13 @@
 
 #include "Graphics/Display.h"
 
+
+/* overall to-do list
+ * TODO: Private variables should end with the suffix "_"
+ * TODO: All header files should have a .cpp. Yes i am looking at you Transform.h
+ * TODO: Rename the namespace FF to ff.
+ */
+
 namespace FF {
 	Display* Game::display = NULL;
 

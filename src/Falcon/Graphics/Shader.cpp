@@ -8,6 +8,7 @@
 
 #include "Shader.h"
 
+#include <glm/detail/type_mat.hpp>
 #include <fstream>
 #include <iostream>
 
@@ -28,6 +29,8 @@ namespace FF {
 
 		glValidateProgram(program);
 		checkShaderError(program, GL_VALIDATE_STATUS, true, "Program is invalid: ");
+
+		uniforms[TRANSFORM_U] = glGetUniformLocation(program, "transform");
 	}
 
 	Shader::~Shader() {
@@ -41,6 +44,11 @@ namespace FF {
 
 	void Shader::bind() {
 		glUseProgram(program);
+	}
+
+	void Shader::update(const Transform& transform) {
+		glm::mat4 model = transform.getModel();
+		glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GL_FALSE, &model[0][0]);
 	}
 
 	GLuint Shader::createShader(const std::string& text, GLenum shaderType) {

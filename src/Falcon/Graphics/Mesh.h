@@ -21,7 +21,7 @@ namespace FF {
 		};
 
 		GLuint vaoID;
-		GLuint vboID;
+		GLuint vboID  ;
 		GLuint cboID;
 
 		unsigned int drawCount;
