@@ -15,86 +15,80 @@
 
 // TODO: I need 2 constructors. 1 for vertices + color and 1 for vertices + texCoords.
 	//And in the future another constructor for model + color and model + texCoords.
-namespace FF {
-	Mesh::Mesh(GLfloat vertices[], GLfloat colors[], GLfloat texCoords[], unsigned int numVertices) {
 
-		drawCount = numVertices / 4;
+//TODO: use the enum shit. Check bennybox code for how. (Will be replaced by all the .aoID's)
+
+namespace FF {
+Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices) {
+		IndexedModel model;
+
+		for(unsigned int i = 0; i < numVertices; i++) {
+			model.positions.push_back(*vertices[i].GetPos());
+			model.texCoords.push_back(*vertices[i].GetTexCoord());
+			model.normals.push_back(*vertices[i].GetNormal());
+		}
+
+		for (unsigned int i = 0; i < numIndices; i++) {
+			model.indices.push_back(indices[i]);
+		}
+
+		initMesh(model);
+	}
+
+	Mesh::Mesh(const std::string& path) {
+		IndexedModel model = OBJModel(path).ToIndexedModel();
+
+		initMesh(model);
+	}
+
+	Mesh::~Mesh() {
+		glDeleteBuffers(NUM_BUFFERS, vertexArrayBuffers);
+		glDeleteVertexArrays(1, &vertexArrayObject);
+	}
+
+	void Mesh::initMesh(const IndexedModel& model) {
+
+		numIndices = model.indices.size();
 		GLenum ErrorCheckValue = glGetError();
 
-		glGenVertexArrays(1, &vaoID);
-		glBindVertexArray(vaoID);
+		glGenVertexArrays(1, &vertexArrayObject);
+		glBindVertexArray(vertexArrayObject);
+
+		glGenBuffers(NUM_BUFFERS, vertexArrayBuffers);
 
 		//Pos Buffer
-		glGenBuffers(NUM_BUFFERS, &vboID);
-		glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		glBufferData(GL_ARRAY_BUFFER, numVertices, vertices, GL_STATIC_DRAW);
-		glVertexAttribPointer(
-				0, //0 = layout number
-				3,
-				GL_FLOAT,
-				GL_FALSE,
-				0,
-				0
-		);
-
-		//Color Buffer
-		glGenBuffers(NUM_BUFFERS, &cboID);
-		glBindBuffer(GL_ARRAY_BUFFER, cboID);
-		glBufferData(GL_ARRAY_BUFFER, numVertices, colors, GL_STATIC_DRAW);
-		glVertexAttribPointer(
-				1, //1 = layout number
-				4,
-				GL_FLOAT,
-				GL_FALSE,
-				0,
-				0
-		);
+		glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[POSITION_VB]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(model.positions[0]) * model.positions.size(), &model.positions[0], GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 		//Texture Buffer
-		glGenBuffers(NUM_BUFFERS, &cboID);
-		glBindBuffer(GL_ARRAY_BUFFER, cboID);
-		glBufferData(GL_ARRAY_BUFFER, numVertices, texCoords, GL_STATIC_DRAW);
-		glVertexAttribPointer(
-				2, //2 = layout number
-				2,
-				GL_FLOAT,
-				GL_FALSE,
-				0,
-				0
-		);
-
-		glEnableVertexAttribArray(0); // 0 = layout number
-		glEnableVertexAttribArray(1); // 1 = layout number
-		glEnableVertexAttribArray(2); // 2 = layout number
+		glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[TEXCOORD_VB]);
+	    glBufferData(GL_ARRAY_BUFFER, sizeof(model.texCoords[0]) * model.texCoords.size(), &model.texCoords[0], GL_STATIC_DRAW);
+	    glEnableVertexAttribArray(1);
+	    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 		ErrorCheckValue = glGetError();
 		if(ErrorCheckValue)
 			fprintf(stderr, "ERROR: Could not create a VBO: %s \n", gluErrorString(ErrorCheckValue));
-	}
 
-	Mesh::~Mesh() {
-		glDeleteVertexArrays(NUM_BUFFERS, &vaoID);
+		//Normal Buffer
+		glBindBuffer(GL_ARRAY_BUFFER, vertexArrayBuffers[NORMAL_VB]);
+	    glBufferData(GL_ARRAY_BUFFER, sizeof(model.normals[0]) * model.normals.size(), &model.normals[0], GL_STATIC_DRAW);
+	    glEnableVertexAttribArray(2);
+	    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+		//Index Buffer
+	 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexArrayBuffers[INDEX_VB]);
+	    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(model.indices[0]) * model.indices.size(), &model.indices[0], GL_STATIC_DRAW);
 	}
 
 	void Mesh::draw() {
-		glBindVertexArray(vaoID);
+	 	glBindVertexArray(vertexArrayObject);
 
-		glDrawArrays(GL_TRIANGLES, 0, drawCount); // drawCount = amount of vertices
+		glDrawElementsBaseVertex(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0, 0);
+		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
-		glBindVertexArray(1);
-		glBindVertexArray(2);
-	}
-
-	void Mesh::setColor(GLfloat colors[], GLfloat numVertices) {
-		glGenBuffers(NUM_BUFFERS, &cboID);
-		glBindBuffer(GL_ARRAY_BUFFER, cboID);
-		glBufferData(GL_ARRAY_BUFFER, numVertices, colors, GL_STATIC_DRAW);
-		glVertexAttribPointer(1, //1 = layout number
-				4,
-				GL_FLOAT,
-				GL_FALSE, 0, 0);
-
-		glEnableVertexAttribArray(1); // 1 = layout number
 	}
 }

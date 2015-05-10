@@ -27,6 +27,7 @@ namespace FF {
 		glfwWindowHint(GLFW_GREEN_BITS, 8);
 		glfwWindowHint(GLFW_BLUE_BITS, 8);
 		glfwWindowHint(GLFW_ALPHA_BITS, 8);
+		glfwWindowHint(GLFW_DEPTH_BITS, 16);
 		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 		glfwWindowHint(GLFW_DECORATED, GL_TRUE);
 
@@ -47,9 +48,14 @@ namespace FF {
 
 		initGLEW();
 
+		glEnable(GL_DEPTH_TEST);
+
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+
 		while (!glfwWindowShouldClose(window)) {
 			glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			gameLoop();
 
@@ -110,5 +116,13 @@ namespace FF {
 		#else
 			return "Other";
 		#endif
+	}
+
+	int& Display::getWidth() {
+		return width;
+	}
+
+	int& Display::getHeight() {
+		return height;
 	}
 }

@@ -11,23 +11,53 @@
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
+#include <string>
+#include "../Common/OBJLoader.h"
+//TODO move getters to class.
 
 namespace FF {
+
+struct Vertex
+{
+public:
+	Vertex(const glm::vec3& pos, const glm::vec2& texCoords, const glm::vec3& normal) {
+			this->pos = pos;
+			this->texCoords = texCoords;
+			this->normal = normal;
+		}
+
+		glm::vec3* GetPos() { return &pos; }
+		glm::vec2* GetTexCoord() { return &texCoords; }
+		glm::vec3* GetNormal() { return &normal; }
+
+	private:
+		glm::vec3 pos;
+		glm::vec2 texCoords;
+		glm::vec3 normal;
+	};
+
+	enum MeshBufferPositions
+	{
+		POSITION_VB,
+		TEXCOORD_VB,
+		NORMAL_VB,
+		INDEX_VB
+	};
+
 	class Mesh {
 	private:
 
-		enum {
-			POSITION_VB, TEXCOORD_VB, NUM_BUFFERS
-		};
+		static const unsigned int NUM_BUFFERS = 4;
 
-		GLuint vaoID;
-		GLuint vboID  ;
-		GLuint cboID;
+		GLuint vertexArrayObject;
+		GLuint vertexArrayBuffers[NUM_BUFFERS];
+		unsigned int numIndices;
 
-		unsigned int drawCount;
+		void initMesh(const IndexedModel& model);
+
 	public:
-		Mesh(GLfloat vertices[], GLfloat colors[], GLfloat texCoords[], unsigned int numVertices);
-		void setColor(GLfloat colors[], GLfloat numVertices);
+		Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
+		Mesh(const std::string& path);
 		virtual ~Mesh();
 
 		void draw();

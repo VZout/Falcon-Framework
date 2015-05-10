@@ -11,6 +11,7 @@
 
 #include <GL/glew.h>
 #include <string>
+#include "Camera.h"
 
 #include "../Common/Transform.h"
 
@@ -18,11 +19,7 @@ namespace FF {
 	class Shader {
 	private:
 		static const unsigned int NUM_SHADERS = 2;
-
-		enum {
-			TRANSFORM_U,
-			NUM_UNIFORMS
-		};
+		static const unsigned int NUM_UNIFORMS = 3;
 
 		GLuint program;
 		GLuint shaders[NUM_SHADERS];
@@ -37,7 +34,7 @@ namespace FF {
 		virtual ~Shader();
 
 		void bind();
-		void update(const Transform& transform);
+		void update(const Transform& transform, const Camera& camera);
 	};
 }
 

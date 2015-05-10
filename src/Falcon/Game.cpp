@@ -18,6 +18,7 @@
  * TODO: Private variables should end with the suffix "_"
  * TODO: All header files should have a .cpp. Yes i am looking at you Transform.h
  * TODO: Rename the namespace FF to ff.
+ * TODO: header construction: public protected private
  */
 
 namespace FF {
@@ -45,7 +46,6 @@ namespace FF {
 	}
 
 	void Game::init() {
-
 	}
 
 	void Game::render() {

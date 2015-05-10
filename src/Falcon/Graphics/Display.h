@@ -10,25 +10,37 @@
 #define DISPLAY_H_
 
 #include <functional>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <string>
+
+#include "Camera.h"
+
+struct GLFWmonitor;
+struct GLFWvidmode;
+struct GLFWwindow;
+
+//TODO: Add the last getters and setters.
+//TODO: Add get aspect ratop getter and setter.
 
 namespace FF {
 	class Display {
 	private:
+		int width;
+		int height;
+		GLFWwindow* window;
+		GLFWmonitor* monitor;
+		const GLFWvidmode* mode;
+		const char* title;
+
 		void initGLFW();
 		void initGLEW();
 		std::string getOSName();
+
 	public:
 		Display(int width, int height, const char* title, std::function<void()> gameLoop);
 		virtual ~Display();
 
-		GLFWwindow* window;
-		GLFWmonitor* monitor;
-		const GLFWvidmode* mode;
-		int width;
-		int height;
-		const char* title;
+		int& getWidth();
+		int& getHeight();
 	};
 }
 
