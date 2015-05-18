@@ -13,7 +13,6 @@
 
 #include "Graphics/Display.h"
 
-
 /* overall to-do list
  * TODO: Private variables should end with the suffix "_"
  * TODO: All header files should have a .cpp. Yes i am looking at you Transform.h
@@ -22,36 +21,58 @@
  */
 
 namespace FF {
-	Display* Game::display = NULL;
+Display* Game::display = NULL;
+Camera Game::camera(glm::vec3(0,0,-4), 70.0f, 720 / 720, 0.01f, 1000.0f);
 
-	Game::Game() {
-		firstFrame = false;
+Game::Game() {
+	firstFrame = false;
+}
+
+Game::~Game() {
+}
+
+void Game::start(int width, int height, const char* title) {
+	display = new Display(width, height, title,
+			std::bind(&Game::gameLoop, this));
+}
+
+void Game::gameLoop() {
+	if (!firstFrame) {
+		firstFrame = true;
+		init();
 	}
 
-	Game::~Game() {
-	}
+	render();
+	update();
+}
 
-	void Game::start(int width, int height, const char* title) {
-		display = new Display(width, height, title, std::bind(&Game::gameLoop, this));
-	}
+void Game::init() {
+}
 
-	void Game::gameLoop() {
-		if(!firstFrame) {
-			firstFrame = true;
-			init();
-		}
-
-		render();
-		update();
+void Game::render() {
+	for(unsigned int i = 0; i < gameObjects.size(); i++) {
+		gameObjects[i]->render();
 	}
+}
 
-	void Game::init() {
+void Game::update() {
+	for(unsigned int i = 0; i < gameObjects.size(); i++) {
+		gameObjects[i]->update();
 	}
+}
 
-	void Game::render() {
-	}
+void Game::add(GameObject* gameObject) {
+	gameObjects.push_back(gameObject);
+	gameObject->init();
+}
 
-	void Game::update() {
-	}
+void Game::remove(unsigned int index) {
+
+}
+
+std::vector<GameObject*> Game::getGameObjects() {
+	return gameObjects;
+}
+
 }
 

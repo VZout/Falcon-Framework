@@ -14,6 +14,8 @@
 #include <cstdio>
 #include <cassert>
 
+// TODO: Move png loader to a seperate class.
+
 namespace FF {
 Texture::Texture(const char* fileName) {
 

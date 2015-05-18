@@ -16,8 +16,6 @@
 // TODO: I need 2 constructors. 1 for vertices + color and 1 for vertices + texCoords.
 	//And in the future another constructor for model + color and model + texCoords.
 
-//TODO: use the enum shit. Check bennybox code for how. (Will be replaced by all the .aoID's)
-
 namespace FF {
 Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices) {
 		IndexedModel model;
