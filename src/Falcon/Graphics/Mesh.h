@@ -12,7 +12,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <string>
-#include "../Common/OBJLoader.h"
+#include "../Loaders/OBJLoader.h"
 //TODO move getters to class.
 
 namespace FF {
@@ -36,8 +36,7 @@ public:
 		glm::vec3 normal;
 	};
 
-	enum MeshBufferPositions
-	{
+	enum MeshBufferPositions {
 		POSITION_VB,
 		TEXCOORD_VB,
 		NORMAL_VB,
