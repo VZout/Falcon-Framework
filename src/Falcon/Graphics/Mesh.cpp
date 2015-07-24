@@ -9,9 +9,11 @@
 #include "Mesh.h"
 
 #include <GL/glu.h>
+#include <GL/gl.h>
 #include <cstdlib>
 #include <iostream>
 #include <GL/glew.h>
+#include <stdio.h>
 
 // TODO: I need 2 constructors. 1 for vertices + color and 1 for vertices + texCoords.
 	//And in the future another constructor for model + color and model + texCoords.

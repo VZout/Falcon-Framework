@@ -9,6 +9,7 @@
 #include "GameObject.h"
 
 #include <algorithm>
+#include <iostream>
 #include <iterator>
 
 #include "../Game.h"
@@ -25,7 +26,6 @@ GameObject::~GameObject() {
 }
 
 void GameObject::init() {
-
 }
 
 void GameObject::render() {

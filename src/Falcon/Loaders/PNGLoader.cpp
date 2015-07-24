@@ -12,7 +12,9 @@
 #include <libpng12/png.h>
 #include <libpng12/pngconf.h>
 #include <stdlib.h>
+#include <csetjmp>
 #include <cstdio>
+#include <cwchar>
 
 namespace FF {
 TextureData PNGLoader::loadPNG(const char* fileName) {

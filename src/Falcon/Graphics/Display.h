@@ -22,6 +22,15 @@ struct GLFWwindow;
 //TODO: Add get aspect ratop getter and setter.
 
 namespace FF {
+
+	enum AntiAliasing {
+		AA_OFF = 0,
+		AA_X2 = 2,
+		AA_X4 = 4,
+		AA_X8 = 8,
+		AA_X16 = 16
+	};
+
 	class Display {
 	private:
 		int width;
@@ -41,6 +50,8 @@ namespace FF {
 
 		int& getWidth();
 		int& getHeight();
+
+		void setAA(AntiAliasing aa);
 	};
 }
 

@@ -10,6 +10,8 @@
 
 #include <functional>
 #include <iostream>
+#include <glm/glm.hpp>
+#include "Common/Time.h"
 
 #include "Graphics/Display.h"
 
@@ -56,6 +58,8 @@ void Game::render() {
 }
 
 void Game::update() {
+	Time::update();
+
 	for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		gameObjects[i]->update();
 	}

@@ -12,6 +12,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <string>
+#include <vector>
 #include "../Loaders/OBJLoader.h"
 //TODO move getters to class.
 
