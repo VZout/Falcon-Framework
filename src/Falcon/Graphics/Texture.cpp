@@ -24,10 +24,6 @@ Texture::Texture(const char* fileName) {
 
 	TextureData tdata = PNGLoader::loadPNG(fileName);
 
-
-	std::cout << "stuffzels " << tdata.getPNGPtr() << std::endl;
-	std::cout << "stuffzels " << tdata.getRowPointers() << std::endl;
-
     // read the png into image_data through row_pointers
     png_read_image(tdata.getPNGPtr(), tdata.getRowPointers());
 

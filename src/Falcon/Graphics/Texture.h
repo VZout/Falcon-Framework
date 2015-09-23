@@ -9,22 +9,17 @@
 #ifndef FALCON_GRAPHICS_TEXTURE_H_
 #define FALCON_GRAPHICS_TEXTURE_H_
 
-#include "GL/glew.h"
+#include <GL/glew.h>
 
 namespace FF {
 class Texture {
 private:
 	GLuint texture;
-	int width;
-	int height;
 public:
 	Texture(const char* fileName);
 	virtual ~Texture();
 
 	void bind(unsigned int unit);
-
-	int getWidth();
-	int getHeight();
 };
 }
 

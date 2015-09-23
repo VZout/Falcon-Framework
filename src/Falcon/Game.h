@@ -8,7 +8,6 @@
 
 #ifndef GAME_H_
 #define GAME_H_
-
 #include <vector>
 #include "Graphics/Display.h"
 #include "Common/GameObject.h"
