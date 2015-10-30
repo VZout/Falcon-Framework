@@ -21,7 +21,6 @@ namespace FF {
 		static const unsigned int NUM_SHADERS = 2;
 		static const unsigned int NUM_UNIFORMS = 3;
 
-		GLuint program;
 		GLuint shaders[NUM_SHADERS];
 		GLuint uniforms[NUM_UNIFORMS];
 
@@ -33,6 +32,7 @@ namespace FF {
 		Shader(const std::string& fileName);
 		virtual ~Shader();
 
+		GLuint program; // Should be private. Temporary not due to Text2D.h
 		void bind();
 		void update(const Transform& transform, const Camera& camera);
 	};

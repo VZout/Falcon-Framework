@@ -37,6 +37,10 @@ void GameObject::render() {
 		shaders[i]->bind();
 	}
 
+	for(unsigned int i =0; i < shaders.size(); i++) {
+			shaders[i]->update(transform, Game::camera); // TODO maybe merge shaders.update and bind into shader.use
+		}
+
 	for(unsigned int i =0; i < textures.size(); i++) {
 		textures[i]->bind(0); //TODO: Add a way to let the user select the 0/unit in .bind();
 	}
@@ -49,10 +53,6 @@ void GameObject::render() {
 void GameObject::update() {
 	for(unsigned int i =0; i < children.size(); i++) {
 		children[i]->update();
-	}
-
-	for(unsigned int i =0; i < shaders.size(); i++) {
-		shaders[i]->update(transform, Game::camera);
 	}
 }
 

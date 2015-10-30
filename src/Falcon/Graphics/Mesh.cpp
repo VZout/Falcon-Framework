@@ -47,7 +47,6 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, un
 	}
 
 	void Mesh::initMesh(const IndexedModel& model) {
-
 		numIndices = model.indices.size();
 		GLenum ErrorCheckValue = glGetError();
 
@@ -87,8 +86,10 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, un
 	 	glBindVertexArray(vertexArrayObject);
 
 		glDrawElementsBaseVertex(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0, 0);
-		glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, 0);
+	 	//glDrawArrays(GL_TRIANGLES, 4, numIndices);
 
 		glBindVertexArray(0);
+
 	}
 }

@@ -57,8 +57,11 @@ void Game::render() {
 	}
 }
 
+bool temp = true;
+int time = 0;
+int lTime = 0;
+
 void Game::update() {
-	Time::update();
 
 	for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		gameObjects[i]->update();
