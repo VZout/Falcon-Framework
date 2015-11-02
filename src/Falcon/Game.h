@@ -12,6 +12,7 @@
 #include "Graphics/Display.h"
 #include "Common/GameObject.h"
 #include "Graphics/Camera.h"
+#include "Common/Time.h"
 
 namespace FF {
 	class Game {
@@ -25,6 +26,7 @@ namespace FF {
 
 		static Display* display;
 		static Camera camera;
+		static Time time;
 
 		void start(int width, int height, const char* title);
 

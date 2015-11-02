@@ -15,11 +15,11 @@ public:
 	Time();
 	virtual ~Time();
 
-	static void update();
+	void update();
+	double lastTime;
+	double fps;
+	int nbFrames;
 };
-	static double lastTime;
-	static double fps;
-	static int nbFrames;
 }
 
 #endif /* FALCON_COMMON_TIME_H_ */

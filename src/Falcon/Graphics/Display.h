@@ -50,6 +50,8 @@ namespace FF {
 
 		int& getWidth();
 		int& getHeight();
+		GLFWwindow* getWindow();
+		GLFWmonitor* getMonitor();
 
 		void setAA(AntiAliasing aa);
 	};

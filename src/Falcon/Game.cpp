@@ -11,7 +11,6 @@
 #include <functional>
 #include <iostream>
 #include <glm/glm.hpp>
-#include "Common/Time.h"
 
 #include "Graphics/Display.h"
 
@@ -25,6 +24,7 @@
 namespace FF {
 Display* Game::display = NULL;
 Camera Game::camera(glm::vec3(0,0,-4), 70.0f, 720 / 720, 0.01f, 1000.0f);
+Time Game::time;
 
 Game::Game() {
 	firstFrame = false;
@@ -57,11 +57,8 @@ void Game::render() {
 	}
 }
 
-bool temp = true;
-int time = 0;
-int lTime = 0;
-
 void Game::update() {
+	time.update();
 
 	for(unsigned int i = 0; i < gameObjects.size(); i++) {
 		gameObjects[i]->update();

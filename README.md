@@ -8,6 +8,9 @@ This is a 2D and 3D video game engine based on OpenGL 2 and higher. There are al
 ## Requirements
 * A C++ compiler (For example Clang or MinGW)
 
+## Bugs
+* V-Sync does not work on integrated intel devices.
+
 ## Documentation
 *Coming Soon*
 

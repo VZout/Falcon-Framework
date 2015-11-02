@@ -50,7 +50,7 @@ Display::Display(int width, int height, const char* title,
 	}
 
 	initGLEW();
-	glfwSwapInterval(1); //VSYNC TODO: Make optional
+	glfwSwapInterval(0); //VSYNC TODO: Make optional
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -121,6 +121,14 @@ std::string Display::getOSName() {
 #else
 	return "Other";
 #endif
+}
+
+GLFWwindow* Display::getWindow() {
+	return window;
+}
+
+GLFWmonitor* Display::getMonitor() {
+	return monitor;
 }
 
 int& Display::getWidth() {
